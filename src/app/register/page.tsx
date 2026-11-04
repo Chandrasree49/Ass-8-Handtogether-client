@@ -4,7 +4,6 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
-  HeartHandshake,
   User,
   Mail,
   Image,
@@ -56,7 +55,7 @@ export default function RegisterPage() {
   return (
     <main className="min-h-screen bg-[#F8F9FC] flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-xl bg-white rounded-2xl shadow-lg border border-gray-100 px-7 py-9 sm:px-10">
-        {/* Header */}
+        
         <div className="text-center mb-9">
           <div className="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-purple-500 flex items-center justify-center shadow-md shadow-purple-200">
             <span className="text-4xl text-purple-700">♡</span>
@@ -69,9 +68,9 @@ export default function RegisterPage() {
           </p>
         </div>
 
-        {/* Registration Form */}
+    
         <form onSubmit={handleRegister} className="space-y-5">
-          {/* Name */}
+     
           <div>
             <label className="block text-sm font-bold text-gray-900 mb-2">
               Full Name
@@ -94,7 +93,7 @@ export default function RegisterPage() {
             </div>
           </div>
 
-          {/* Email */}
+        
           <div>
             <label className="block text-sm font-bold text-gray-900 mb-2">
               Email Address
@@ -117,7 +116,7 @@ export default function RegisterPage() {
             </div>
           </div>
 
-          {/* Photo URL */}
+      
           <div>
             <label className="block text-sm font-bold text-gray-900 mb-2">
               Profile Photo URL
@@ -140,7 +139,6 @@ export default function RegisterPage() {
             </div>
           </div>
 
-          {/* Password */}
           <div>
             <label className="block text-sm font-bold text-gray-900 mb-2">
               Password
@@ -168,7 +166,7 @@ export default function RegisterPage() {
             </p>
           </div>
 
-          {/* Submit Button */}
+     
           <button
             type="submit"
             disabled={loading}
@@ -179,16 +177,16 @@ export default function RegisterPage() {
           </button>
         </form>
 
-        {/* Login Link */}
+    
         <div className="text-center mt-7">
           <p className="text-sm text-gray-500">
             Already have an account?{" "}
             <Link
-              href="/login"
-              className="font-bold text-purple-700 hover:text-purple-900 transition"
-            >
-              Login here
-            </Link>
+  href="/login"
+  className="font-bold text-purple-700 hover:text-purple-900 transition"
+>
+  Login here
+</Link>
           </p>
         </div>
       </div>
