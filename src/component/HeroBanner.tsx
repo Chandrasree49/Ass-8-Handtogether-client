@@ -7,7 +7,7 @@ export default function HeroBanner() {
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-purple-50 via-purple-100 to-violet-200">
 
-      <div className="absolute -top-32 right-0 w-[550px] h-[550px] bg-purple-300/30 rounded-full blur-3xl" />
+<div className="absolute -top-32 right-0 w-[550px] h-[550px] bg-purple-300/30 rounded-full blur-3xl" />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-20 lg:py-24">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
