@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-
 import {
   MapPin,
   Calendar,
@@ -11,17 +10,14 @@ import {
   CheckCircle2,
   ArrowLeft,
   Share2,
-  Mail,
   Phone,
-  Target,
   Sparkles,
-  ShieldCheck,
 } from "lucide-react";
-
 import Swal from "sweetalert2";
 
 type Event = {
-  id: string | number;
+  _id?: string;
+  id?: string | number;
   title: string;
   eventType: string;
   targetGoal?: string;
@@ -35,16 +31,24 @@ type Event = {
   creatorEmail?: string;
   creatorPhoto?: string;
   contactPhone?: string;
+  joinedUsers?: string[];
 };
 
 export default function EventDetailsClient({ event }: { event: Event }) {
-  const [volunteers, setVolunteers] = useState<string[]>([]);
-  const [isJoined, setIsJoined] = useState(false);
+  const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:5000";
+  const currentUserEmail = "demo@gmail.com";
+  const eventId = event._id || event.id;
+
+  
+  const [volunteers, setVolunteers] = useState<string[]>(event.joinedUsers || []);
+  const [isJoined, setIsJoined] = useState<boolean>(
+    (event.joinedUsers || []).includes(currentUserEmail)
+  );
+  const [isUpdating, setIsUpdating] = useState<boolean>(false);
 
   const joinedCount = volunteers.length;
 
   const date = new Date(event.eventDate);
-
   const formattedDate = !isNaN(date.getTime())
     ? date.toLocaleDateString("en-US", {
         weekday: "long",
@@ -54,27 +58,100 @@ export default function EventDetailsClient({ event }: { event: Event }) {
       })
     : "Date not available";
 
-  function handleJoin() {
-    if (isJoined) return;
 
-    setVolunteers((prev) => [...prev, "demo@gmail.com"]);
-    setIsJoined(true);
+  async function handleJoin() {
+    if (isJoined || isUpdating) return;
 
-    Swal.fire("Successfully Joined!", "You joined this event.", "success");
+    try {
+      setIsUpdating(true);
+
+      const res = await fetch(`${SERVER_URL}/events/${eventId}/join`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userEmail: currentUserEmail }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to join event in database");
+      }
+
+      setVolunteers((prev) => [...prev, currentUserEmail]);
+      setIsJoined(true);
+
+      Swal.fire({
+        icon: "success",
+        title: "Successfully Joined!",
+        text: "You are now registered for this event in MongoDB.",
+        confirmButtonColor: "#9333ea",
+      });
+    } catch (err) {
+      console.error("Join error:", err);
+      Swal.fire({
+        icon: "error",
+        title: "Could not join",
+        text: "Make sure your backend server is running.",
+        confirmButtonColor: "#9333ea",
+      });
+    } finally {
+      setIsUpdating(false);
+    }
   }
 
-  function handleCancel() {
-    setVolunteers((prev) => prev.filter((email) => email !== "demo@gmail.com"));
+ 
+  async function handleCancel() {
+    if (isUpdating) return;
 
-    setIsJoined(false);
+    const confirm = await Swal.fire({
+      title: "Cancel Attendance?",
+      text: "Are you sure you want to withdraw from this event?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#ef4444",
+      cancelButtonColor: "#6b7280",
+      confirmButtonText: "Yes, Cancel",
+      cancelButtonText: "Keep Spot",
+    });
 
-    Swal.fire("Join Cancelled", "You left this event.", "info");
+    if (confirm.isConfirmed) {
+      try {
+        setIsUpdating(true);
+
+        const res = await fetch(`${SERVER_URL}/events/${eventId}/leave`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ userEmail: currentUserEmail }),
+        });
+
+        if (!res.ok) {
+          throw new Error("Failed to cancel attendance in database");
+        }
+
+        setVolunteers((prev) => prev.filter((email) => email !== currentUserEmail));
+        setIsJoined(false);
+
+        Swal.fire({
+          icon: "info",
+          title: "Attendance Cancelled",
+          text: "You have left this event.",
+          confirmButtonColor: "#9333ea",
+        });
+      } catch (err) {
+        console.error("Leave error:", err);
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Could not cancel attendance.",
+          confirmButtonColor: "#9333ea",
+        });
+      } finally {
+        setIsUpdating(false);
+      }
+    }
   }
 
   async function handleShare() {
     try {
       await navigator.clipboard.writeText(window.location.href);
-
       Swal.fire({
         icon: "success",
         title: "Link Copied!",
@@ -92,6 +169,7 @@ export default function EventDetailsClient({ event }: { event: Event }) {
 
   return (
     <div className="min-h-screen bg-white">
+      
       <nav className="border-b border-purple-100 bg-white">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
           <Link
@@ -112,13 +190,12 @@ export default function EventDetailsClient({ event }: { event: Event }) {
         </div>
       </nav>
 
+     
       <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-       
         <div className="overflow-hidden rounded-3xl border-2 border-purple-500 bg-white shadow-xl">
           <div className="grid grid-cols-1 lg:grid-cols-3">
-  
+       
             <div className="space-y-8 p-6 sm:p-8 lg:col-span-2 lg:p-10">
-           
               <div className="overflow-hidden rounded-2xl">
                 {event.thumbnail ? (
                   <img
@@ -133,7 +210,6 @@ export default function EventDetailsClient({ event }: { event: Event }) {
                 )}
               </div>
 
-              
               <section>
                 <div className="mb-4 flex flex-wrap gap-3">
                   <span className="rounded-full border border-purple-200 bg-purple-50 px-4 py-2 text-sm font-semibold text-purple-700">
@@ -149,115 +225,66 @@ export default function EventDetailsClient({ event }: { event: Event }) {
                   {event.title}
                 </h1>
 
-                <div className="flex flex-col flex-wrap gap-4 text-gray-600 sm:flex-row">
+                <div className="flex flex-wrap gap-6 text-sm text-gray-600">
                   <div className="flex items-center gap-2">
-                    <Calendar size={19} className="text-purple-600" />
-                    {formattedDate}
+                    <Calendar size={18} className="text-purple-600" />
+                    <span>{formattedDate}</span>
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <Clock size={19} className="text-purple-600" />
-                    {event.eventTime || "Time not provided"}
+                    <Clock size={18} className="text-purple-600" />
+                    <span>{event.eventTime || "09:00 AM"}</span>
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <MapPin size={19} className="text-purple-600" />
-                    {event.location}
+                    <MapPin size={18} className="text-purple-600" />
+                    <span>{event.location}</span>
                   </div>
                 </div>
               </section>
 
-       
-              <section className="border-t border-purple-100 pt-8">
-                <h2 className="mb-5 flex items-center gap-3 text-2xl font-bold text-gray-900">
-                  <Target className="text-purple-600" />
-                  About This Initiative
+              <section>
+                <h2 className="mb-3 text-xl font-bold text-gray-900">
+                  About the Event
                 </h2>
-
-                <p className="leading-8 text-gray-600">{event.description}</p>
+                <p className="leading-relaxed text-gray-600 whitespace-pre-line">
+                  {event.description}
+                </p>
               </section>
 
-           
-              <section className="border-t border-purple-100 pt-8">
-                <h2 className="mb-5 flex items-center gap-3 text-2xl font-bold text-gray-900">
-                  <ShieldCheck className="text-purple-600" />
-                  Volunteer Guidelines
-                </h2>
-
-                <div className="space-y-4">
-                  <div className="flex items-center gap-3">
-                    <CheckCircle2
-                      className="shrink-0 text-purple-600"
-                      size={20}
-                    />
-                    <p className="text-gray-600">
-                      Wear comfortable clothing suitable for event activities.
-                    </p>
-                  </div>
-
-                  <div className="flex items-center gap-3">
-                    <CheckCircle2
-                      className="shrink-0 text-purple-600"
-                      size={20}
-                    />
-                    <p className="text-gray-600">
-                      Bring drinking water and stay hydrated.
-                    </p>
-                  </div>
-
-                  <div className="flex items-center gap-3">
-                    <CheckCircle2
-                      className="shrink-0 text-purple-600"
-                      size={20}
-                    />
-                    <p className="text-gray-600">
-                      Be respectful and follow the organizer's instructions.
-                    </p>
-                  </div>
-                </div>
-              </section>
-
-          
-              <section className="border-t border-purple-100 pt-8">
-                <h2 className="mb-6 text-2xl font-bold text-gray-900">
-                  Initiative Organizer
-                </h2>
-
-                <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
+              
+              <section className="rounded-2xl border border-purple-100 bg-purple-50/60 p-6">
+                <h3 className="mb-3 font-bold text-gray-900">Event Organizer</h3>
+                <div className="flex items-center gap-4">
                   {event.creatorPhoto ? (
                     <img
                       src={event.creatorPhoto}
-                      alt={event.creatorName || "Event Organizer"}
-                      className="h-20 w-20 rounded-full border-2 border-purple-200 object-cover"
+                      alt={event.creatorName || "Organizer"}
+                      className="h-12 w-12 rounded-full object-cover"
                     />
                   ) : (
-                    <div className="flex h-20 w-20 items-center justify-center rounded-full bg-purple-100 text-2xl font-bold text-purple-700">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-purple-200 font-bold text-purple-800">
                       {(event.creatorName || "O").charAt(0).toUpperCase()}
                     </div>
                   )}
-
-                  <div className="space-y-2">
-                    <h3 className="text-xl font-bold text-gray-900">
-                      {event.creatorName || "Event Organizer"}
-                    </h3>
-
-                    <p className="flex items-center gap-2 text-gray-600">
-                      <Mail size={17} className="text-purple-600" />
-                      {event.creatorEmail || "Email not provided"}
+                  <div>
+                    <h4 className="font-semibold text-gray-900">
+                      {event.creatorName || "Community Volunteer"}
+                    </h4>
+                    <p className="text-xs text-purple-700">
+                      {event.creatorEmail || "support@handtogether.org"}
                     </p>
-
-                    <p className="flex items-center gap-2 text-gray-600">
-                      <Phone size={17} className="text-purple-600" />
-                      {event.contactPhone || "Phone not provided"}
+                    <p className="mt-1 flex items-center gap-1 text-xs text-gray-500">
+                      <Phone size={14} className="text-purple-600" />
+                      {event.contactPhone || "+880 1712-345678"}
                     </p>
                   </div>
                 </div>
               </section>
             </div>
 
-        
+            
             <aside className="space-y-8 border-t border-purple-200 bg-purple-50/50 p-6 sm:p-8 lg:border-l lg:border-t-0 lg:p-8">
-        
               <section>
                 <h2 className="mb-6 text-xl font-bold text-gray-900">
                   Volunteer Registration
@@ -281,9 +308,10 @@ export default function EventDetailsClient({ event }: { event: Event }) {
                 {!isJoined ? (
                   <button
                     onClick={handleJoin}
-                    className="mt-6 w-full rounded-xl bg-purple-600 px-6 py-3 font-semibold text-white transition hover:bg-purple-700"
+                    disabled={isUpdating}
+                    className="mt-6 w-full rounded-xl bg-purple-600 px-6 py-3 font-semibold text-white transition hover:bg-purple-700 disabled:opacity-50"
                   >
-                    Join Event
+                    {isUpdating ? "Joining..." : "Join Event"}
                   </button>
                 ) : (
                   <div className="mt-6 space-y-3">
@@ -294,15 +322,16 @@ export default function EventDetailsClient({ event }: { event: Event }) {
 
                     <button
                       onClick={handleCancel}
-                      className="w-full rounded-xl border border-red-300 bg-white px-6 py-3 font-semibold text-red-600 transition hover:bg-red-50"
+                      disabled={isUpdating}
+                      className="w-full rounded-xl border border-red-300 bg-white px-6 py-3 font-semibold text-red-600 transition hover:bg-red-50 disabled:opacity-50"
                     >
-                      Cancel Attendance
+                      {isUpdating ? "Updating..." : "Cancel Attendance"}
                     </button>
                   </div>
                 )}
               </section>
 
-            
+              
               <section className="border-t border-purple-200 pt-7">
                 <h2 className="mb-4 text-xl font-bold text-gray-900">
                   Registered Volunteers
