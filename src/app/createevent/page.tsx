@@ -340,7 +340,7 @@ export default function CreateEventPage() {
 
               <button
                 type="submit"
-                onClick={() => router.push("/upcomingevents")}
+
                 disabled={isSubmitting}
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-2xl font-bold text-sm text-white bg-purple-600 hover:bg-purple-700 disabled:bg-purple-300 disabled:cursor-not-allowed shadow-lg shadow-purple-600/30 transition-all"
               >

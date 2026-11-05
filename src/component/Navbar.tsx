@@ -10,7 +10,7 @@ export default function Navbar() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  // Demo user data
+
   const user = {
     name: "John Doe",
     image: "https://i.pravatar.cc/150?img=12",
@@ -25,7 +25,6 @@ export default function Navbar() {
     <nav className="sticky top-0 z-50 bg-white shadow-sm">
       <div className="max-w-7xl mx-auto px-5 lg:px-8">
         <div className="h-20 flex items-center justify-between">
-       
           <Link
             href="/"
             className="flex items-center gap-2"
@@ -40,14 +39,13 @@ export default function Navbar() {
 
           <div className="hidden md:flex items-center gap-9">
             <Link
-              href="/"
+              href="/upcomingevents"
               className="font-semibold text-purple-700 hover:text-purple-900 transition"
             >
               <span>▤</span> Upcoming Events
             </Link>
           </div>
 
-        
           <div className="hidden md:flex items-center">
             {!isLoggedIn ? (
               <button
@@ -62,7 +60,6 @@ export default function Navbar() {
                 onMouseEnter={() => setDropdownOpen(true)}
                 onMouseLeave={() => setDropdownOpen(false)}
               >
-               
                 <button
                   onClick={() => setDropdownOpen(!dropdownOpen)}
                   title={user.name}
@@ -80,7 +77,6 @@ export default function Navbar() {
                 {dropdownOpen && (
                   <div className="absolute right-0 top-full pt-3 w-64 z-50">
                     <div className="bg-white border border-purple-100 rounded-2xl shadow-xl p-3">
-                    
                       <div className="px-3 py-3 border-b border-gray-100 mb-2">
                         <p className="font-bold text-gray-900">{user.name}</p>
 
@@ -90,7 +86,7 @@ export default function Navbar() {
                       </div>
 
                       <Link
-                        href="/create-event"
+                        href="/createevent"
                         onClick={closeMenus}
                         className="flex items-center gap-3 p-3 rounded-xl hover:bg-purple-50 text-gray-700 transition"
                       >
@@ -135,7 +131,6 @@ export default function Navbar() {
             )}
           </div>
 
-          {/* MOBILE MENU BUTTON */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             className="md:hidden text-purple-700 text-3xl"
@@ -145,7 +140,7 @@ export default function Navbar() {
           </button>
         </div>
 
-        {/* MOBILE NAVIGATION */}
+       
         {mobileOpen && (
           <div className="md:hidden border-t border-purple-100 py-5 space-y-2">
             <Link
@@ -157,7 +152,7 @@ export default function Navbar() {
             </Link>
 
             <Link
-              href="/events"
+            href="/upcomingevents"
               onClick={closeMenus}
               className="block p-3 rounded-xl text-gray-700 hover:bg-purple-50"
             >
@@ -189,7 +184,7 @@ export default function Navbar() {
                 </div>
 
                 <Link
-                  href="/create-event"
+                  href="/createevent"
                   onClick={closeMenus}
                   className="block p-3 hover:bg-purple-50 rounded-xl"
                 >

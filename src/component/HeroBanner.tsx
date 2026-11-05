@@ -33,10 +33,9 @@ export default function HeroBanner() {
               a better tomorrow.
             </p>
 
-            {/* Buttons */}
+          
             <div className="flex flex-wrap gap-4 mt-9">
-              <Link
-                href="/events"
+            <Link href="/upcomingevents"
                 className="inline-flex items-center gap-3 bg-purple-700 hover:bg-purple-800 text-white px-8 py-4 rounded-full font-bold shadow-lg shadow-purple-300 transition duration-300 hover:-translate-y-1"
               >
                 Explore Events <span>→</span>
@@ -50,7 +49,7 @@ export default function HeroBanner() {
               </Link>
             </div>
 
-            {/* Statistics */}
+      
             <div className="flex flex-wrap items-center gap-7 md:gap-9 mt-16">
               <div className="flex items-center gap-3">
                 <div className="bg-white/70 p-3 rounded-full text-purple-700 text-2xl">
