@@ -2,31 +2,31 @@
 
 import React, { useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import { useAuth } from '@/context/AuthContext';
+import { useSession } from '@/lib/auth-client';
 
 export default function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { user, isLoading } = useAuth();
+  const { data: session, isPending } = useSession();
   const router = useRouter();
   const pathname = usePathname();
 
   useEffect(() => {
-    if (!isLoading && !user) {
+    if (!isPending && !session?.user) {
       router.push(`/login?redirect=${encodeURIComponent(pathname)}`);
     }
-  }, [user, isLoading, router, pathname]);
+  }, [session, isPending, router, pathname]);
 
-  if (isLoading) {
+  if (isPending) {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center p-8">
-        <div className="w-12 h-12 border-4 border-emerald-500/30 border-t-emerald-600 rounded-full animate-spin" />
-        <p className="mt-4 text-sm font-medium text-base-content/60">
+        <div className="w-12 h-12 border-4 border-purple-200 border-t-purple-600 rounded-full animate-spin" />
+        <p className="mt-4 text-sm font-medium text-purple-700">
           Verifying session...
         </p>
       </div>
     );
   }
 
-  if (!user) {
+  if (!session?.user) {
     return null;
   }
 
