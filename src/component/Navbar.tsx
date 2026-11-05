@@ -97,14 +97,7 @@ export default function Navbar() {
               <div className="flex items-center gap-3">
                 
                 
-                <button
-                  type="button"
-                  className="w-10 h-10 rounded-full flex items-center justify-center text-purple-700 hover:bg-purple-50 transition"
-                  title="Toggle theme"
-                >
-                  <Moon size={20} />
-                </button>
-
+                
                 
                 <div
                   className="relative"
