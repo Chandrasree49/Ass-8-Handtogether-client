@@ -14,7 +14,7 @@ export default function Newsletter() {
 
     Swal.fire({
       icon: "success",
-      title: "Subscribed! 🎉",
+      title: "Subscribed! ",
       text: "You will receive emergency relief dispatches directly to your inbox.",
       confirmButtonColor: "#7e22ce",
       timer: 2500,

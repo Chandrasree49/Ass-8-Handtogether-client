@@ -7,8 +7,6 @@ import {
   Phone,
   Mail,
   Heart,
-  Calendar,
-  Sparkles,
 } from "lucide-react";
 
 export default function Footer() {
@@ -119,7 +117,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Column 3: Causes & Categories */}
           <div className="space-y-3">
             <h4 className="text-sm font-bold uppercase tracking-wider text-gray-900 dark:text-white">
               Initiatives
