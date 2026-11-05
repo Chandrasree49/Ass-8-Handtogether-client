@@ -17,7 +17,7 @@ export default function Navbar() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  // Real Account Owner details
+  
   const [user, setUser] = useState({
     name: "Account Owner",
     email: "owner@gmail.com",
@@ -29,7 +29,6 @@ export default function Navbar() {
     setMobileOpen(false);
   };
 
-  // Load logged-in user from localStorage
   useEffect(() => {
     const stored = localStorage.getItem("user");
     if (stored) {
@@ -50,7 +49,7 @@ export default function Navbar() {
     }
   }, []);
 
-  // Logout handler
+  
   const handleLogout = () => {
     localStorage.removeItem("user");
     setIsLoggedIn(false);
@@ -63,7 +62,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-5 lg:px-8">
         <div className="h-20 flex items-center justify-between">
           
-          {/* Logo */}
+          
           <Link
             href="/"
             className="flex items-center gap-2"
@@ -75,7 +74,7 @@ export default function Navbar() {
             </h1>
           </Link>
 
-          {/* Navigation Links */}
+          
           <div className="hidden md:flex items-center gap-9">
             <Link
               href="/upcomingevents"
@@ -85,7 +84,7 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Right Controls */}
+         
           <div className="hidden md:flex items-center gap-3">
             {!isLoggedIn ? (
               <Link
@@ -97,7 +96,7 @@ export default function Navbar() {
             ) : (
               <div className="flex items-center gap-3">
                 
-                {/* 1. Moon Theme Toggle Icon */}
+                
                 <button
                   type="button"
                   className="w-10 h-10 rounded-full flex items-center justify-center text-purple-700 hover:bg-purple-50 transition"
@@ -106,7 +105,7 @@ export default function Navbar() {
                   <Moon size={20} />
                 </button>
 
-                {/* 2. Avatar with Chevron Dropdown */}
+                
                 <div
                   className="relative"
                   onMouseEnter={() => setDropdownOpen(true)}
@@ -126,12 +125,12 @@ export default function Navbar() {
                     </span>
                   </button>
 
-                  {/* 3. The Dropdown Card (Matches Screenshot Exactly) */}
+                  
                   {dropdownOpen && (
                     <div className="absolute right-0 top-full pt-2 w-64 z-50">
                       <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-4 space-y-3">
                         
-                        {/* Account Owner Name & Gmail */}
+                       
                         <div>
                           <p className="font-extrabold text-gray-900 text-sm truncate">
                             {user.name}
@@ -143,9 +142,9 @@ export default function Navbar() {
 
                         <hr className="border-gray-100" />
 
-                        {/* Menu Options */}
+                       
                         <div className="space-y-1">
-                          {/* Create Event */}
+                          
                           <Link
                             href="/createevent"
                             onClick={closeMenus}
@@ -155,7 +154,7 @@ export default function Navbar() {
                             <span>Create Event</span>
                           </Link>
 
-                          {/* Manage Events */}
+                          
                           <Link
                             href="/manageevent"
                             onClick={closeMenus}
@@ -165,7 +164,7 @@ export default function Navbar() {
                             <span>Manage Events</span>
                           </Link>
 
-                          {/* Joined Events */}
+                         
                           <Link
                             href="/joinevent"
                             onClick={closeMenus}
@@ -178,7 +177,7 @@ export default function Navbar() {
 
                         <hr className="border-gray-100" />
 
-                        {/* Dropdown Logout */}
+                       
                         <button
                           onClick={handleLogout}
                           className="flex items-center gap-2.5 p-2 w-full text-rose-500 hover:bg-rose-50 rounded-xl text-sm font-semibold transition"
@@ -192,7 +191,7 @@ export default function Navbar() {
                   )}
                 </div>
 
-                {/* 4. The Pill [-> Logout] Button (Right Next To The Picture) */}
+                
                 <button
                   onClick={handleLogout}
                   className="flex items-center gap-1.5 px-4 py-2 rounded-xl border border-gray-200 hover:border-rose-200 text-rose-500 hover:bg-rose-50 text-sm font-bold transition shadow-sm"
@@ -206,8 +205,7 @@ export default function Navbar() {
             )}
           </div>
 
-          {/* Mobile Hamburger Button */}
-          <button
+         <button
             onClick={() => setMobileOpen(!mobileOpen)}
             className="md:hidden text-purple-700 text-3xl"
             aria-label="Toggle navigation"
@@ -216,7 +214,7 @@ export default function Navbar() {
           </button>
         </div>
 
-        {/* Mobile Drawer */}
+  
         {mobileOpen && (
           <div className="md:hidden border-t border-gray-100 py-4 space-y-2">
             <Link

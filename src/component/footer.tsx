@@ -1,42 +1,43 @@
-'use client';
+"use client";
 
-import React from 'react';
-import Link from 'next/link';
+import React from "react";
+import Link from "next/link";
 import {
-  HeartHandshake,
   MapPin,
   Phone,
   Mail,
   Heart,
-  ArrowUpRight,
-} from 'lucide-react';
+  Calendar,
+  Sparkles,
+} from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="bg-base-200/80 border-t border-base-300 text-base-content transition-colors duration-300 pt-16 pb-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8 pb-12 border-b border-base-300/80">
-        
+    <footer className="bg-gray-50 dark:bg-gray-950 border-t border-gray-200 dark:border-gray-800 text-gray-700 dark:text-gray-300 transition-colors pt-16 pb-12">
+      <div className="max-w-7xl mx-auto px-5 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8 pb-12 border-b border-gray-200 dark:border-gray-800">
+          
+          
           <div className="lg:col-span-2 space-y-4">
-            <Link href="/" className="inline-flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center shadow-md shadow-emerald-500/20">
-                <HeartHandshake className="w-6 h-6" />
-              </div>
-              <span className="text-2xl font-bold tracking-tight">
-                Bondhon
+            <Link href="/" className="inline-flex items-center gap-2">
+              <span className="text-3xl text-purple-700 dark:text-purple-400">♡</span>
+              <span className="text-2xl font-extrabold text-gray-900 dark:text-white tracking-tight">
+                HAND<span className="text-purple-700 dark:text-purple-400">TOGETHER</span>
               </span>
             </Link>
-            <p className="text-sm text-base-content/75 leading-relaxed max-w-sm">
-              Bondhon is a grassroots social development platform empowering volunteers across Bangladesh to coordinate winter relief, food distribution, tree plantations, and emergency humanitarian support in local neighborhoods.
+
+            <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed max-w-sm">
+              Hand in Hand for a Stronger Community. HANDTOGETHER is a volunteer-driven platform empowering compassionate citizens to host, organize, and participate in local social relief drives.
             </p>
-           
+
+            
             <div className="flex items-center gap-3 pt-2">
             
               <a
                 href="https://x.com"
                 target="_blank"
                 rel="noreferrer"
-                className="w-9 h-9 rounded-xl bg-base-100 hover:bg-emerald-600 hover:text-white border border-base-300 flex items-center justify-center transition-all"
+                className="w-9 h-9 rounded-xl bg-white dark:bg-gray-800 hover:bg-purple-600 hover:text-white dark:hover:bg-purple-600 border border-gray-200 dark:border-gray-700 flex items-center justify-center transition-all shadow-sm"
                 aria-label="X (formerly Twitter)"
               >
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -44,11 +45,12 @@ export default function Footer() {
                 </svg>
               </a>
 
+             
               <a
                 href="https://facebook.com"
                 target="_blank"
                 rel="noreferrer"
-                className="w-9 h-9 rounded-xl bg-base-100 hover:bg-emerald-600 hover:text-white border border-base-300 flex items-center justify-center transition-all"
+                className="w-9 h-9 rounded-xl bg-white dark:bg-gray-800 hover:bg-purple-600 hover:text-white dark:hover:bg-purple-600 border border-gray-200 dark:border-gray-700 flex items-center justify-center transition-all shadow-sm"
                 aria-label="Facebook"
               >
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -56,12 +58,12 @@ export default function Footer() {
                 </svg>
               </a>
 
-             
+         
               <a
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noreferrer"
-                className="w-9 h-9 rounded-xl bg-base-100 hover:bg-emerald-600 hover:text-white border border-base-300 flex items-center justify-center transition-all"
+                className="w-9 h-9 rounded-xl bg-white dark:bg-gray-800 hover:bg-purple-600 hover:text-white dark:hover:bg-purple-600 border border-gray-200 dark:border-gray-700 flex items-center justify-center transition-all shadow-sm"
                 aria-label="LinkedIn"
               >
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -69,12 +71,11 @@ export default function Footer() {
                 </svg>
               </a>
 
-             
               <a
                 href="https://instagram.com"
                 target="_blank"
                 rel="noreferrer"
-                className="w-9 h-9 rounded-xl bg-base-100 hover:bg-emerald-600 hover:text-white border border-base-300 flex items-center justify-center transition-all"
+                className="w-9 h-9 rounded-xl bg-white dark:bg-gray-800 hover:bg-purple-600 hover:text-white dark:hover:bg-purple-600 border border-gray-200 dark:border-gray-700 flex items-center justify-center transition-all shadow-sm"
                 aria-label="Instagram"
               >
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -84,101 +85,114 @@ export default function Footer() {
             </div>
           </div>
 
-       
+         
           <div className="space-y-3">
-            <h4 className="text-sm font-bold uppercase tracking-wider text-base-content">
+            <h4 className="text-sm font-bold uppercase tracking-wider text-gray-900 dark:text-white">
               Platform
             </h4>
-            <ul className="space-y-2 text-sm text-base-content/70">
+            <ul className="space-y-2.5 text-sm text-gray-600 dark:text-gray-400">
               <li>
-                <Link href="/" className="hover:text-emerald-600 transition-colors">
+                <Link href="/" className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
                   Home Overview
                 </Link>
               </li>
               <li>
-                <Link href="/events" className="hover:text-emerald-600 transition-colors">
+                <Link href="/upcomingevents" className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
                   Upcoming Events
                 </Link>
               </li>
               <li>
-                <Link href="/create-event" className="hover:text-emerald-600 transition-colors">
+                <Link href="/createevent" className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
                   Host an Initiative
                 </Link>
               </li>
               <li>
-                <Link href="/manage-events" className="hover:text-emerald-600 transition-colors">
+                <Link href="/manageevent" className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
                   Manage Events
                 </Link>
               </li>
               <li>
-                <Link href="/joined-events" className="hover:text-emerald-600 transition-colors">
+                <Link href="/joinevent" className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
                   Joined Activities
                 </Link>
               </li>
             </ul>
           </div>
 
-        
+          {/* Column 3: Causes & Categories */}
           <div className="space-y-3">
-            <h4 className="text-sm font-bold uppercase tracking-wider text-base-content">
-              Causes
+            <h4 className="text-sm font-bold uppercase tracking-wider text-gray-900 dark:text-white">
+              Initiatives
             </h4>
-            <ul className="space-y-2 text-sm text-base-content/70">
+            <ul className="space-y-2.5 text-sm text-gray-600 dark:text-gray-400">
               <li>
-                <span className="hover:text-emerald-600 cursor-pointer">Winter Warmth Relief</span>
+                <Link href="/upcomingevents" className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
+                  Winter Warmth Relief
+                </Link>
               </li>
               <li>
-                <span className="hover:text-emerald-600 cursor-pointer">Blanket Distribution</span>
+                <Link href="/upcomingevents" className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
+                  Blanket Distribution
+                </Link>
               </li>
               <li>
-                <span className="hover:text-emerald-600 cursor-pointer">Cleanliness & River Clean</span>
+                <Link href="/upcomingevents" className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
+                  Cleanliness & River Clean
+                </Link>
               </li>
               <li>
-                <span className="hover:text-emerald-600 cursor-pointer">Afforestation & Saplings</span>
+                <Link href="/upcomingevents" className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
+                  Tree Plantation Drives
+                </Link>
               </li>
               <li>
-                <span className="hover:text-emerald-600 cursor-pointer">Slum Food Program</span>
+                <Link href="/upcomingevents" className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
+                  Community Food Support
+                </Link>
               </li>
             </ul>
           </div>
 
+         
           <div className="space-y-3">
-            <h4 className="text-sm font-bold uppercase tracking-wider text-base-content">
-              Headquarters
+            <h4 className="text-sm font-bold uppercase tracking-wider text-gray-900 dark:text-white">
+              Community Hub
             </h4>
-            <div className="space-y-2.5 text-sm text-base-content/75">
+            <div className="space-y-3 text-sm text-gray-600 dark:text-gray-400">
               <div className="flex items-start gap-2.5">
-                <MapPin className="w-4 h-4 text-emerald-600 mt-0.5 shrink-0" />
-                <span>House 42, Road 11, Mirpur DOHS, Dhaka 1216, Bangladesh</span>
+                <MapPin className="w-4 h-4 text-purple-600 dark:text-purple-400 mt-0.5 shrink-0" />
+                <span>Mirpur, Dhaka, Bangladesh</span>
               </div>
               <div className="flex items-center gap-2.5">
-                <Phone className="w-4 h-4 text-emerald-600 shrink-0" />
+                <Phone className="w-4 h-4 text-purple-600 dark:text-purple-400 shrink-0" />
                 <span>+880 1712-345678</span>
               </div>
               <div className="flex items-center gap-2.5">
-                <Mail className="w-4 h-4 text-emerald-600 shrink-0" />
-                <span>contact@bondhon-relief.org</span>
+                <Mail className="w-4 h-4 text-purple-600 dark:text-purple-400 shrink-0" />
+                <span>support@handtogether.org</span>
               </div>
               <div className="pt-2">
-                <div className="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                  Volunteer Hotline Active 24/7
+                <div className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full bg-purple-100 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300">
+                  <span className="w-2 h-2 rounded-full bg-purple-600 animate-pulse" />
+                  Volunteer Hotline Active
                 </div>
               </div>
             </div>
           </div>
+
         </div>
 
-        
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-base-content/60">
+      
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-500 dark:text-gray-400">
           <p>
-            © 2026 Bondhon Community Platform. All rights reserved.
+            © {new Date().getFullYear()} HANDTOGETHER Platform. All rights reserved.
           </p>
           <div className="flex items-center gap-1">
-            <span>Built with dedication for community development across Bangladesh</span>
-            <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500 inline mx-0.5" />
+            <span>Built with dedication for community solidarity</span>
+            <Heart className="w-3.5 h-3.5 text-purple-600 fill-purple-600 inline mx-0.5" />
           </div>
         </div>
+
       </div>
     </footer>
   );
