@@ -1,122 +1,187 @@
 "use client";
 
-import { Mail, Lock, LogIn } from "lucide-react";
+import { useState } from "react";
+import Link from "next/link";
+import { Mail, Lock, LogIn, Eye, EyeOff } from "lucide-react";
+import { toast } from "react-hot-toast";
 
 export default function LoginPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false); 
+  const [loading, setLoading] = useState(false);
+
+  const handleEmailLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!email.trim() || !password.trim()) {
+      toast.error("Please enter both email and password.");
+      return;
+    }
+
+    if (password.length < 6) {
+      toast.error("Password must be at least 6 characters.");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+  
+      const userData = {
+        name: email.split("@")[0],
+        email: email,
+        image:
+          "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=250",
+      };
+
+      localStorage.setItem("user", JSON.stringify(userData));
+      toast.success("Login successful! Welcome back.");
+
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 500);
+    } catch {
+      toast.error("Something went wrong. Please try again.");
+      setLoading(false);
+    }
+  };
+
+  const handleGithubLogin = () => {
+    setLoading(true);
+
+    const githubUser = {
+      name: "GitHub Volunteer",
+      email: "volunteer.github@gmail.com",
+      image: "https://avatars.githubusercontent.com/u/9919?v=4",
+    };
+
+    localStorage.setItem("user", JSON.stringify(githubUser));
+    toast.success("Successfully logged in with GitHub! 🐙");
+
+  
+    setTimeout(() => {
+      window.location.href = "/";
+    }, 500);
+  };
+
   return (
-    <main className="min-h-screen w-full  bg-white flex items-center justify-center p-4 sm:p-6">
-      <div className="w-full max-w-[560px] bg-white rounded-[30px] px-7 sm:px-12 py-12 shadow-2xl">
-        <div className="flex justify-center items-center gap-3 mb-3">
-          <div className="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-purple-500 flex items-center justify-center shadow-md shadow-purple-200">
-            <span className="text-4xl text-purple-700">♡</span>
+    <main className="min-h-screen w-full bg-[#f8f9fd] flex items-center justify-center p-4 sm:p-6">
+      <div className="w-full max-w-[540px] bg-white rounded-3xl p-8 sm:p-12 shadow-xl border border-gray-100">
+
+        <div className="flex justify-center mb-4">
+          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center shadow-md shadow-purple-200">
+            <span className="text-3xl text-white">♡</span>
           </div>
         </div>
-    
-        <div className="text-center mb-12">
-          <h5 className="text-3xl font-extrabold text-gray-900">
-            Hey! Welcome to{" "}
-            <span className="text-3xl text-purple-700">HANDTOGETHER</span>
-          </h5>
 
-          <p className="text-gray-600 text-[17px] mt-3 leading-6">
-            Sign in to see our events
+  
+        <div className="text-center mb-8">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900">
+            Welcome to <span className="text-purple-700">HANDTOGETHER</span>
+          </h1>
+          <p className="text-gray-500 text-sm mt-2">
+            Sign in to join and manage community initiatives
           </p>
         </div>
- 
-        <form className="space-y-6">
-      
+
+        <form onSubmit={handleEmailLogin} className="space-y-5">
+        
           <div>
-            <label className="block text-[15px] font-bold text-black mb-2">
+            <label className="block text-sm font-bold text-gray-800 mb-1.5">
               Email Address
             </label>
-
-            <div className="flex items-center border border-gray-200 bg-[#fafafa] rounded-[20px] h-[57px] px-5 gap-3 focus-within:border-[#009966]">
-              <Mail size={20} className="text-gray-500" />
-
+            <div className="flex items-center border border-gray-200 bg-gray-50 rounded-2xl h-[52px] px-4 gap-3 focus-within:border-purple-600 focus-within:bg-white transition-all">
+              <Mail size={18} className="text-purple-600 shrink-0" />
               <input
                 type="email"
-                placeholder="Enter your email address"
-                className="w-full bg-transparent outline-none text-gray-800 placeholder:text-gray-300"
-                required
-              />
-            </div>
-          </div>
-
-      
-          <div>
-            <label className="block text-[15px] font-bold text-black mb-2">
-              Password
-            </label>
-
-            <div className="flex items-center border border-gray-200 bg-[#fafafa] rounded-[20px] h-[57px] px-5 gap-3 focus-within:border-[#009966]">
-              <Lock size={20} className="text-gray-500" />
-
-              <input
-                type="password"
-                placeholder="Enter your password"
-                className="w-full bg-transparent outline-none text-gray-800 placeholder:text-gray-300"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="name@example.com"
+                className="w-full bg-transparent outline-none text-gray-800 placeholder:text-gray-400 text-sm"
                 required
               />
             </div>
           </div>
 
           
+          <div>
+            <label className="block text-sm font-bold text-gray-800 mb-1.5">
+              Password
+            </label>
+            <div className="flex items-center border border-gray-200 bg-gray-50 rounded-2xl h-[52px] px-4 gap-3 focus-within:border-purple-600 focus-within:bg-white transition-all">
+              <Lock size={18} className="text-purple-600 shrink-0" />
+
+              <input
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter your password"
+                className="w-full bg-transparent outline-none text-gray-800 placeholder:text-gray-400 text-sm"
+                required
+              />
+
+             
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="text-gray-400 hover:text-purple-700 transition focus:outline-none p-1"
+                title={showPassword ? "Hide password" : "Show password"}
+              >
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
+            </div>
+          </div>
+
+       
           <button
             type="submit"
-            className="w-full h-[60px] bg-[#c439dc] hover:bg-[#714c8f] text-white font-bold text-[17px] rounded-[20px] shadow-lg shadow-green-100 transition-all flex items-center justify-center gap-3"
+            disabled={loading}
+            className="w-full h-[52px] mt-2 bg-purple-700 hover:bg-purple-800 disabled:opacity-60 text-white font-bold text-sm rounded-2xl shadow-lg shadow-purple-200 transition flex items-center justify-center gap-2"
           >
-            <LogIn size={20} />
-            Sign In
+            <LogIn size={18} />
+            {loading ? "Signing in..." : "Sign In"}
           </button>
         </form>
-  
-        <div className="flex items-center gap-4 my-10">
-          <div className="flex-1 h-px bg-gray-200" />
 
-          <span className="text-sm text-gray-600 whitespace-nowrap">
+  
+        <div className="flex items-center gap-4 my-7">
+          <div className="flex-1 h-px bg-gray-200" />
+          <span className="text-xs text-gray-400 font-semibold uppercase tracking-wider">
             or continue with
           </span>
-
           <div className="flex-1 h-px bg-gray-200" />
         </div>
+
         
         <button
           type="button"
-          className="w-full h-[52px] border border-gray-200 rounded-[20px] flex items-center justify-center gap-3 text-black font-semibold hover:bg-gray-50 transition-all"
+          onClick={handleGithubLogin}
+          disabled={loading}
+          className="w-full h-[50px] bg-[#8018bc] hover:bg-[#121517] text-white rounded-2xl flex items-center justify-center gap-3 font-semibold transition text-sm shadow-sm"
         >
           <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 48 48"
+            className="w-5 h-5 fill-current text-white shrink-0"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
           >
             <path
-              fill="#EA4335"
-              d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"
-            />
-            <path
-              fill="#4285F4"
-              d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.75 7.18l7.73 6C44.42 38.04 46.98 31.86 46.98 24.55z"
-            />
-            <path
-              fill="#FBBC05"
-              d="M10.53 28.59A14.4 14.4 0 0 1 9.75 24c0-1.59.27-3.13.76-4.59l-7.98-6.19A23.9 23.9 0 0 0 0 24c0 3.87.93 7.52 2.56 10.78l7.97-6.19z"
-            />
-            <path
-              fill="#34A853"
-              d="M24 48c6.48 0 11.93-2.13 15.91-5.8l-7.73-6c-2.15 1.45-4.92 2.3-8.18 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.97 6.19C6.51 42.62 14.62 48 24 48z"
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
             />
           </svg>
-          Continue with Google
+          <span>Continue with GitHub</span>
         </button>
-        <p className="text-center text-gray-600 text-[15px] mt-10">
-          Don't have an account yet?{" "}
-          <a
+
+        <p className="text-center text-gray-500 text-sm mt-7">
+          Don&apos;t have an account yet?{" "}
+          <Link
             href="/register"
-            className="text-[#991aa8] font-bold hover:underline"
+            className="text-purple-700 font-bold hover:underline"
           >
             Create an account
-          </a>
+          </Link>
         </p>
       </div>
     </main>
