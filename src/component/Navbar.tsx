@@ -95,7 +95,7 @@ export default function Navbar() {
                       </Link>
 
                       <Link
-                        href="/manage-events"
+                        href="/manageevent"
                         onClick={closeMenus}
                         className="flex items-center gap-3 p-3 rounded-xl hover:bg-purple-50 text-gray-700 transition"
                       >
@@ -104,7 +104,7 @@ export default function Navbar() {
                       </Link>
 
                       <Link
-                        href="/joined-events"
+                        href="/joinevent"
                         onClick={closeMenus}
                         className="flex items-center gap-3 p-3 rounded-xl hover:bg-purple-50 text-gray-700 transition"
                       >
@@ -192,7 +192,7 @@ export default function Navbar() {
                 </Link>
 
                 <Link
-                  href="/manage-events"
+                  href="/manageevent"
                   onClick={closeMenus}
                   className="block p-3 hover:bg-purple-50 rounded-xl"
                 >
@@ -200,7 +200,7 @@ export default function Navbar() {
                 </Link>
 
                 <Link
-                  href="/joined-events"
+                  href="/joinevent"
                   onClick={closeMenus}
                   className="block p-3 hover:bg-purple-50 rounded-xl"
                 >
