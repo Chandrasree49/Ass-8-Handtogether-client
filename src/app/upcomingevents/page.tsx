@@ -153,7 +153,7 @@ export default function UpcomingEventsPage() {
           </Link>
         </div>
 
-        {/* Search and Category Filters */}
+        
         <div className="bg-white p-5 sm:p-6 rounded-2xl border border-purple-200 shadow-sm space-y-5">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="relative md:col-span-2">
@@ -204,7 +204,6 @@ export default function UpcomingEventsPage() {
           </button>
         </div>
 
-        {/* Count Bar */}
         <div className="flex items-center justify-between text-sm text-gray-500 px-1">
           <p>
             Showing <strong className="text-purple-700">{filteredEvents.length}</strong> events
@@ -212,7 +211,7 @@ export default function UpcomingEventsPage() {
           <p className="hidden sm:block">Community volunteer initiatives</p>
         </div>
 
-        {/* Loading State */}
+        
         {isLoading ? (
           <div className="text-center py-16">
             <div className="w-10 h-10 border-4 border-purple-200 border-t-purple-600 rounded-full animate-spin mx-auto" />
@@ -230,7 +229,7 @@ export default function UpcomingEventsPage() {
             </button>
           </div>
         ) : filteredEvents.length > 0 ? (
-          /* Event Cards Grid */
+         
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredEvents.map((event) => {
               const eventId = event._id || event.id;
@@ -241,7 +240,7 @@ export default function UpcomingEventsPage() {
                   className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-xl hover:border-purple-200 transition-all duration-300 flex flex-col justify-between"
                 >
                   <div>
-                    {/* 🖼️ FIXED IMAGE WITH FALLBACK */}
+                    
                     <img
                       src={
                         event.thumbnail && event.thumbnail.startsWith("http")
@@ -255,7 +254,7 @@ export default function UpcomingEventsPage() {
                       className="w-full h-48 object-cover rounded-xl mb-5"
                     />
 
-                    {/* Category & Calendar */}
+                    
                     <div className="flex items-center justify-between mb-4">
                       <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs font-bold">
                         {event.eventType}
@@ -263,17 +262,17 @@ export default function UpcomingEventsPage() {
                       <CalendarDays className="text-purple-600" size={20} />
                     </div>
 
-                    {/* Title */}
+                    
                     <h2 className="text-xl font-bold text-gray-900 mb-2 line-clamp-1">
                       {event.title}
                     </h2>
 
-                    {/* Description */}
+                    
                     <p className="text-gray-600 text-sm leading-relaxed mb-5 line-clamp-2">
                       {event.description}
                     </p>
 
-                    {/* Date and Location */}
+                
                     <div className="space-y-2.5 text-sm text-gray-500">
                       <div className="flex items-center gap-2">
                         <CalendarDays size={16} className="text-purple-600" />
@@ -293,7 +292,7 @@ export default function UpcomingEventsPage() {
                     </div>
                   </div>
 
-                  {/* View Details Button */}
+                 
                   <Link
                     href={`/upcomingevents/${eventId}`}
                     className="block w-full text-center mt-6 py-3 bg-purple-600 text-white rounded-xl font-semibold hover:bg-purple-700 transition"
